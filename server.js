@@ -2,14 +2,14 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors =require('cors');
 const path =require("path");
-const mongose = require('mongoose');
+const mongoose = require('mongoose');
 //const { Mongoose } = require('mongoose');
-conts routes = require('./src/routes');
+const routes = require('./src/routes');
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-mongose.connect('mongodb://localhost:27017/curso-basico-mearn'),{
+mongoose.connect('mongodb://localhost:27017/curso-basico-mearn'),{
   useUnifieldTopology:true,
   useNewUrlParser : true,
   useFindAndModify :false
