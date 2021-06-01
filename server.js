@@ -9,8 +9,11 @@ const routes = require('./src/routes');
 const app = express();
 const port = process.env.PORT || 5000;
 
-mongoose.connect('mongodb://localhost:27017/curso-basico-mearn'),{
-  useUnifieldTopology:true,
+const atlas_connection_string = 'mongodb+srv://root:1234@alana01.w65ds.mongodb.net/curso-basico-mern?retryWrites=true&w=majority';
+//mongodb://localhost:27017/curso-basico-mearn
+
+mongoose.connect(atlas_connection_string),{
+  useUnifiedTopology:true,
   useNewUrlParser : true,
   useFindAndModify :false
 }, function(err){
