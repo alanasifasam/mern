@@ -1,8 +1,7 @@
-const { update } = require('../models/usuario.model');
-const Usuario = require ('../models/usuario.model');//pastas
-const {delete} = require('../routes');
 
+const Usuario = require ('../models/usuario.model');
 
+ 
 module.exports = {
     //busca todas as informações no banco 
    async index(req,res){
@@ -11,7 +10,7 @@ module.exports = {
       }, 
 
             // recebe as informações do corpo do front coloca na tabela. 
-      async create(req,res){
+          async create(req,res){
           const {nome_usuario,email_usuario,tipo_usuario,senha_usuario} = req.body;
           let data = {};
 
@@ -21,6 +20,7 @@ module.exports = {
               data = {nome_usuario,email_usuario,tipo_usuario,senha_usuario};
               // espera executar primeiro data porque é assincrona
               user = await Usuario.create(data); 
+
                return res.status(200).json(user); 
           }else{
               return res.status(500).json(user);
@@ -34,7 +34,7 @@ module.exports = {
       }, 
       // função deletar 
       async delete(req,res){
-         const {_id} = req.params;
+        const {_id} = req.params;
         const user = await Usuario.findByIdAndDelete({_id});
         return res.json(user);
       },

@@ -1,5 +1,5 @@
 const mongoose = require ('mongoose');
-const bcrypt =require('bcrypt');//CRIPTOGRAFA A SENHA   
+const bcrypt = require ('bcrypt');  
 
 
 const DataSchema = new mongoose.Schema({
@@ -29,5 +29,5 @@ DataSchema.pre('findOneAndUpdate', function(next){
 })
 
 // exporta a função 
-const usuarios = mongoose.model('Usuarios,DataSchema');
+const usuarios = mongoose.model('Usuarios', DataSchema);
 module.exports = usuarios;

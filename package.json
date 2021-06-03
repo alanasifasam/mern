@@ -4,16 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev":"nodemon server.js",
+    "dev": "nodemon server.js",
+    "server": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "path": "^0.12.7"
+    "mongo": "^0.1.0",
+    "mongoose": "^5.12.12",
+    "path": "^0.12.7",
+    "schema": "^0.2.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
