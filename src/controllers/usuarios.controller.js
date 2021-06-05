@@ -13,8 +13,7 @@ module.exports = {
           async create(req,res){
           const {nome_usuario,email_usuario,tipo_usuario,senha_usuario} = req.body;
           let data = {};
-
-          let user =  Usuario.findOne({email_usuario});// verifica se o email já existe
+          let user = await Usuario.findOne({email_usuario});// verifica se o email já existe
           // caso não exista o email, salva em user novo usuario.
           if(!user){ 
               data = {nome_usuario,email_usuario,tipo_usuario,senha_usuario};
