@@ -11,12 +11,12 @@ module.exports = {
 
             // recebe as informações do corpo do front coloca na tabela. 
           async create(req,res){
-          const {nome_prodto,descricao_produto,preco_produto,qtd_produto} = req.body;
+          const {nome_produto,descricao_produto,preco_produto,qtd_produto} = req.body;
           let data = {};
-
+          let product = await Produto.findOne({nome_produto});
          
           if(!product){ 
-              data = {nome_prodto,descricao_produto,preco_produto,qtd_produto};
+              data = {nome_produto,descricao_produto,preco_produto,qtd_produto};
               product = await Produto.create(data); 
                return res.status(200).json(product); 
           }else{
@@ -28,6 +28,7 @@ module.exports = {
         const {_id} = req.params;
         const product = await Produto.findOne({_id});
         res.json(product);
+        
       }, 
       // função deletar 
       async delete(req,res){
@@ -37,8 +38,8 @@ module.exports = {
       },
       //atualização de informações
       async update(req,res){
-          const {_id,nome_prodto,descricao_produto,preco_usuario,qtd_produto}  = req.body;
-          const data = {nome_prodto,descricao_produto,preco_usuario,qtd_produto};
+          const {_id,nome_produto,descricao_produto,preco_produto,qtd_produto} = req.body;
+          const data = {nome_produto,descricao_produto,preco_produto,qtd_produto};
           const product = await Produto.findOneAndUpdate({_id},data,{new:true});
          res.json(product);
       },
