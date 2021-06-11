@@ -18,6 +18,7 @@ import Button from '@material-ui/core/Button';
 
 import MenuAdmin from '../../../componets/menu-admin';
 import Footer from '../../../componets/footer-admin';
+import api from '../../../services/api';
 
 function Copyright() {
   return (
@@ -54,9 +55,25 @@ export default function UsuarioCadastrar() {
   const [senha, setSenha]= useState('');
   const [tipo, setTipo]=useState('');
  
-  function handleSubmit(){
-  const data = {nome,email,senha,tipo}
+  async function handleSubmit(){
+  const data = {
+    nome_usuario:nome,
+    email_usuario:email,
+    senha_usuario:senha,
+    tipo_usuario:tipo}
+     
+    if(nome!==''&&email!==''&&senha!==''&&tipo!==''){
 
+     const response = await api.post('/api/usuarios',data);
+
+     if (response.status === 200){
+       window.location.href='/admin/usuarios'
+     }else{
+       alert('Erro ao cadastrar o usuario!');
+     }
+    }else{
+      alert('Por Favor, preencha todos os dados !');
+    }
   }
 
   return (
@@ -134,12 +151,12 @@ export default function UsuarioCadastrar() {
                           <Footer/>
                     </Box>
 
-             </Grid>
-             <Grid item xs={12}  sm={12}>
-             <Button variant="contained" color="primary">
-                Salvar 
-              </Button>
-             </Grid>
+                     </Grid>
+                    <Grid item xs={12}  sm={12}>
+                    <Button variant="contained" onClick={handleSubmit} color="primary">
+                      Salvar 
+                    </Button>
+                     </Grid>
           </Grid>
         </Container>
       </main>
