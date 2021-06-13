@@ -93,7 +93,19 @@ module.exports = {
                   }
                 })
               }
-            }
- 
+            },
+      async destroToken(req,res){
+        const token = req.headers.token;
+        if(token){
+          res.cookie('token', null,{httpOnly:true});
+          
+        }else{
+          res.status(401).send("Logout não autorizado!");
+        }
+          re.send("Sessão finalizada com sucesso!!");
+      }
+
+
+
 }
 
