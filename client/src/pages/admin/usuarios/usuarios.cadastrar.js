@@ -20,18 +20,6 @@ import MenuAdmin from '../../../componets/menu-admin';
 import Footer from '../../../componets/footer-admin';
 import api from '../../../services/api';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="javascripty:;">
-        Curso Básico MERN
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 
 

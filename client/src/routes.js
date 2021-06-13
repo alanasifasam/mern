@@ -1,6 +1,6 @@
 import React from 'react';
-
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
 
 //IMPORTS ADMIN 
 
@@ -19,6 +19,9 @@ import UsuarioCadastrar from './pages/admin/usuarios/usuarios.cadastrar';
 // IMPORT CLIENT 
 import Home from './pages/client/home';     // ja chama index
 import ProdutoDetails from './pages/client/produtos/produtos.details';
+import Login from'./pages/admin/login';
+
+import PrivateRoute from './services/wAuth';
 
 
 export default function Routes (){
@@ -34,13 +37,15 @@ export default function Routes (){
                 {/*rota admin*/}
 
                <Route path ="/admin" exact component={Dashboard}/>
+               <Route path ="/admin/login" exact component={Login}/>
+
                <Route path ="/admin/produtos" exact component={Produtos}/>
                <Route path ="/admin/produtos/cadastrar" exact component={ProdutoCadastrar}/>
                <Route path ="/admin/produtos/editar/:idProduto" exact component={ProdutoEditar}/>
 
                 
                
-               <Route path ="/admin/usuarios" exact component={Usuarios}/>
+               <PrivateRoute path ="/admin/usuarios" exact component={Usuarios}/>
                <Route path ="/admin/usuarios/cadastrar" exact component={UsuarioCadastrar}/>
                <Route path ="/admin/usuarios/editar/:idUsuario" exact component={UsuarioEditar}/>
            </Switch>
