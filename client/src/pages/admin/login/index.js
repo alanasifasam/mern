@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 import api from '../../../services/api';
-import {setNomeUsuario,login,setIdUsuario}from '../../../services/auth';
+import {setNomeUsuario,login,setIdUsuario, setTipoUsuario}from '../../../services/auth';
 
 
 
@@ -57,16 +57,24 @@ export default function SignIn() {
                     login(res.data.token);
                     setIdUsuario(res.data.id_client);
                     setNomeUsuario(res.data.user_name);
-                    //envia p/
+                    setTipoUsuario(res.data.user_type);
+                    //envia 
                     window.location.href = '/admin'
             }else if (res.data.status===2){
                 alert('Atenção: '+res.data.error);
-            
-            }else{
+              
+               // setLoading(false);
+              }else{
                 alert('Erro no servidor');
-            }
+              
+               // setLoading(false);
+          }
         })
-    }
+    
+      
+      }
+
+
 
   return (
     <Container component="main" maxWidth="xs">

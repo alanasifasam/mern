@@ -48,11 +48,11 @@ module.exports = {
          res.json(user);
       },
 
-
-
+      
+       // autenticação se senha e usuario, somente adm 
      async login (req,res){
        const{ email, senha } = req.body;
-       Usuario.findOne( {email_usuario: email, function (err, user){
+       Usuario.findOne( {email_usuario: email}, function (err, user){
          if(err){
            console.log(err);
             res.status(200).json({erro: "Erro no Servidor. Por favor, tente novamente"});
@@ -70,23 +70,21 @@ module.exports = {
                 expiresIn:'24h'
             })
               res.cookie('token', token, {httpOnly:true});
-              res.status(200).json({status:1, auth: true, token:token, id_client: user._id, user_name:user.nome_usuario, user_type:user.tipo_usuario});
+              res.status(200).json({status:1, auth:true, token:token, id_client:user._id, user_name:user.nome_usuario, user_type:user.tipo_usuario});
               }
 
             }) 
           }
-          }      
-        })
+     })
+},
 
-
-            },
             async checkToken(req,res){
               const token = req.body.token || req.query.token || req.cookies.token || req.headers['x-access-token'];
               
               if(!token){
                 res.json({status:401,msg:'Não autorizado: Token inexistente !!'});
               }else {
-                jwt.verify(token, secret, function(err,decoded){
+                jwt.verify(token, secret, function(err, decoded){
                   if(err){
                     res.json({status:401,msg:'Não autorizado: Token inválido!!'});
                   }else {
