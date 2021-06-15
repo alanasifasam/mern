@@ -15,6 +15,14 @@ import Container from '@material-ui/core/Container';
 
 import api from '../../../services/api';
 import {setNomeUsuario,login,setIdUsuario, setTipoUsuario}from '../../../services/auth';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import IconButton from '@material-ui/core/IconButton';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 
 
@@ -47,8 +55,12 @@ export default function SignIn() {
 
     const [email,setEmail] = useState('');
     const [senha,setSenha] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [loading,setLoading]= useState(false);
 
     async function handleSubmit(){
+
+      
         await api.post('/api/usuarios/login',{email,senha})
         .then(res =>{
             if(res.status===200){
@@ -63,18 +75,24 @@ export default function SignIn() {
             }else if (res.data.status===2){
                 alert('Atenção: '+res.data.error);
               
-               // setLoading(false);
+                setLoading(false);
               }else{
                 alert('Erro no servidor');
               
-               // setLoading(false);
+               setLoading(false);
           }
         })
     
       
       }
 
-
+    function LoadSubmit(){
+      setLoading(true);
+      setTimeout(
+        () =>handleSubmit(),
+        2000
+      )
+    }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -100,7 +118,7 @@ export default function SignIn() {
             value ={email}
             onChange = {e =>setEmail(e.target.value)}
           />
-          <TextField
+          {/*<TextField
             variant="outlined"
             margin="normal"
             required
@@ -112,17 +130,42 @@ export default function SignIn() {
             autoComplete="current-password"
             value ={senha}
             onChange = {e =>setSenha(e.target.value)}
+          />*/}
+         
+         <FormControl variant="outlined" style ={{width:'100%',marginTop:10}}>
+          <InputLabel htmlFor="campoSenha">Digite sua senha</InputLabel>
+          <OutlinedInput
+            id="campoSenha"
+            type={showPassword ? 'text' : 'password'}
+            value={senha}
+            onChange={e =>setSenha(e.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={e => setShowPassword(!showPassword)}
+                  edge="end"
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+            labelWidth={120}
           />
-         
-         
+        </FormControl>
+
+
+
           <Button
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick ={handleSubmit} 
+            onClick ={LoadSubmit} 
+            disabled={loading}
           >
-            Entrar 
+            {loading?<CircularProgress/>: "Entrar"}
+            
           </Button>
         
         

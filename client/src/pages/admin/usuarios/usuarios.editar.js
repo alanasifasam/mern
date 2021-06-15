@@ -21,6 +21,9 @@ import Footer from '../../../componets/footer-admin';
 import api from '../../../services/api';
 
 import{useParams} from 'react-router-dom';
+import AddIcon from '@material-ui/icons/Add';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import SaveIcon from '@material-ui/icons/Save';
 
 
 
@@ -98,6 +101,11 @@ useEffect(() =>{
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
            <Grid item sm ={12}>
+           <Button style={{marginBottom:10}} variant="contained"  href={'/admin/usuarios'}><ArrowBackIcon/>Voltar</Button>
+           <Button style={{marginBottom:10}} variant="contained" color="primary" href={'/admin/usuarios/cadastrar/'}>
+             <AddIcon/>
+             Cadastrar
+             </Button>
                    <Paper className={classes.paper}>
                     <h2>Atualização de Usuários</h2>
                     <Grid container spacing={3}>
@@ -135,8 +143,8 @@ useEffect(() =>{
                               onChange={e => setTipo(e.target.value)}
                             >
                               <MenuItem value={1}>Administrador</MenuItem>
-                              <MenuItem value={2}>Funcionário</MenuItem>
-                              
+                              <MenuItem value={2}>Gerente</MenuItem>
+                              <MenuItem value={3}>Funcionário</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -153,21 +161,19 @@ useEffect(() =>{
                             value={senha}
                             onChange={e => setSenha (e.target.value)}
                                   />
-                                </Grid>
-                            </Grid>
-                          </Paper>
-                  
-                     <Box pt={4}>
-                          <Footer/>
-                    </Box>
-
-                     </Grid>
+                     </Grid>    
                     <Grid item xs={12}  sm={12}>
                     <Button variant="contained" onClick={handleSubmit} color="primary">
-                      Salvar 
+                      <SaveIcon/>Salvar 
                     </Button>
+                    </Grid>
+                    </Grid>
+                    </Paper>
                      </Grid>
-          </Grid>
+                      </Grid>
+                     <Box pt={4}>
+                    <Footer/>
+                    </Box>
         </Container>
       </main>
     </div>

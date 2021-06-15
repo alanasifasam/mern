@@ -21,6 +21,11 @@ import Chip from '@material-ui/core/Chip';
 import MenuAdmin from '../../../componets/menu-admin';
 import Footer from '../../../componets/footer-admin';
 import api from '../../../services/api';
+import { getNomeTipo,getNomeTipoLabel } from '../../../functions/static_data';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import AddIcon from '@material-ui/icons/Add';
+import AutorenewIcon from '@material-ui/icons/Autorenew';
+import ClearIcon from '@material-ui/icons/Clear';
 
 
 function Copyright() {
@@ -42,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   root: {display: 'flex',},
   title: { flexGrow: 1,},
   appBarSpacer: theme.mixins.toolbar,content: {flexGrow: 1, height: '100vh',overflow: 'auto',},
-  container: {paddingTop: theme.spacing(4),paddingBottom: theme.spacing(4),},
+  container: {paddingTop: theme.spacing(2),paddingBottom: theme.spacing(4),},
   paper: {padding: theme.spacing(2),display: 'flex',overflow: 'auto',flexDirection: 'column',},
   
 }));
@@ -53,15 +58,19 @@ export default function UsuariosListagem() {
   const classes = useStyles();
 
   const [usuarios,setUsuarios] = useState([]);
+  const[loading, setLoading] = useState(true);
 
   useEffect( () =>{
    async function loadUsuarios(){
    const response = await api.get("/api/usuarios");
    setUsuarios(response.data)
+   setLoading(false);
    }
-   loadUsuarios();
 
-  },[]) 
+  loadUsuarios();
+   
+
+  },[])
 
  async function handleDelete(id){
    if(window.confirm("Deseja realmente excluir este usuário ?")){
@@ -84,12 +93,16 @@ export default function UsuariosListagem() {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
            <Grid item sm={12}>
-              <Paper className={classes.paper}>
+           <Button style={{marginBottom:10}} variant="contained" color="primary" href={'/admin/usuarios/cadastrar/'}>
+             <AddIcon/>
+             Cadastrar
+             </Button>
+               <Paper className={classes.paper}>
                         <h2>Listagem de Usuários</h2>
                         <Grid container spacing={3}>
                             <Grid item xs={12} sm={12}>
-
                            <TableContainer component={Paper}>
+                             {loading?(<LinearProgress style={{width:'50%', margin:'20px auto'}}/>):(
                           <Table className={classes.table} aria-label="simple table">
                             <TableHead>
                               <TableRow>
@@ -107,20 +120,14 @@ export default function UsuariosListagem() {
                                     {row.nome_usuario}
                                   </TableCell>
                                   <TableCell align="center">{row.email_usuario}</TableCell>
-                                  <TableCell align="center" >{row.tipo_usuario===1?
-                                                               <Chip
-                                                                label="Administrador"
-                                                                color="primary"
-                                                              />:<Chip
-                                                              label="Funcionário"
-                                                              color="secondary"/>}
+                                  <TableCell align="center" ><Chip label={getNomeTipo(row.tipo_usuario)} color={getNomeTipoLabel(row.tipo_usuario)}/>
                                     </TableCell>
                                   <TableCell align="center">{new Date(row.createdAt).toLocaleString('pt-br')}</TableCell>
                                   <TableCell align="right">
                                   <ButtonGroup aria-label="outlined primary button group">
-                                      <Button color="primary" href={'/admin/usuarios/editar/'+row._id}>Atualizar</Button>
+                                      <Button color="primary" href={'/admin/usuarios/editar/'+row._id}><AutorenewIcon/>Atualizar</Button>
 
-                                      <Button color="secondary" onClick= {()=> handleDelete(row._id)}>Excluir</Button>
+                                      <Button color="secondary" onClick= {()=> handleDelete(row._id)}><ClearIcon /></Button>
                                       
                                     </ButtonGroup>
                                   </TableCell>
@@ -128,7 +135,9 @@ export default function UsuariosListagem() {
                               ))}
                             </TableBody>
                           </Table>
+                             )}
                         </TableContainer> 
+                      
                 </Grid>
               </Grid>
            </Paper>
