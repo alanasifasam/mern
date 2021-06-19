@@ -8,18 +8,7 @@ import MenuAdmin from '../../../componets/menu-admin'
 import ImgAdmin from '../../../assets/img/tela.png'
 import Footer from '../../../componets/footer-admin'
 
-/*function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="javascripty:;">
-        Curso Básico MERN
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}*/
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
